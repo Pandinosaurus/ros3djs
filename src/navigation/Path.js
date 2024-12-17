@@ -1,4 +1,5 @@
 /**
+ * @fileOverview
  * @author David V. Lu!! - davidvlu@gmail.com
  */
 
@@ -27,6 +28,7 @@ ROS3D.Path = function(options) {
   this.line = null;
 
   this.rosTopic = undefined;
+  this.processMessageBound = this.processMessage.bind(this);
   this.subscribe();
 };
 ROS3D.Path.prototype.__proto__ = THREE.Object3D.prototype;
@@ -34,7 +36,7 @@ ROS3D.Path.prototype.__proto__ = THREE.Object3D.prototype;
 
 ROS3D.Path.prototype.unsubscribe = function(){
   if(this.rosTopic){
-    this.rosTopic.unsubscribe(this.processMessage);
+    this.rosTopic.unsubscribe(this.processMessageBound);
   }
 };
 
@@ -48,7 +50,7 @@ ROS3D.Path.prototype.subscribe = function(){
       queue_length : 1,
       messageType : 'nav_msgs/Path'
   });
-  this.rosTopic.subscribe(this.processMessage.bind(this));
+  this.rosTopic.subscribe(this.processMessageBound);
 };
 
 ROS3D.Path.prototype.processMessage = function(message){

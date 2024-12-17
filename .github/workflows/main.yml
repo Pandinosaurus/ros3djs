@@ -10,15 +10,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [14, 16]
+        node_version: [18, 20]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       env:
-        TOKEN: "${{ github.event_name == 'push' && endsWith(github.ref, 'develop') && matrix.node_version == 16 && secrets.RWT_BOT_PAT || github.token }}"
+        TOKEN: "${{ github.event_name == 'push' && endsWith(github.ref, 'develop') && matrix.node_version == 20 && secrets.RWT_BOT_PAT || github.token }}"
       with:
         token: ${{ env.TOKEN }}
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@v4
       with:
+        cache: npm
         node-version: ${{ matrix.node_version }}
     - name: Install grunt-cli
       run: npm install -g grunt-cli
@@ -28,8 +29,8 @@ jobs:
       run: npm run build
     - name: Test
       run: npm test
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      if: ${{ github.event_name == 'push' && endsWith(github.ref, 'develop') && matrix.node_version == 16 }}
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      if: ${{ github.event_name == 'push' && endsWith(github.ref, 'develop') && matrix.node_version == 20 }}
       with:
         commit_message: Update Build
         file_pattern: 'build/*.js'

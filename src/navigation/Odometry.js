@@ -1,4 +1,5 @@
 /**
+ * @fileOverview
  * @author David V. Lu!! - davidvlu@gmail.com
  */
 
@@ -33,6 +34,7 @@ ROS3D.Odometry = function(options) {
   this.sns = [];
 
   this.rosTopic = undefined;
+  this.processMessageBound = this.processMessage.bind(this);
   this.subscribe();
 };
 ROS3D.Odometry.prototype.__proto__ = THREE.Object3D.prototype;
@@ -40,7 +42,7 @@ ROS3D.Odometry.prototype.__proto__ = THREE.Object3D.prototype;
 
 ROS3D.Odometry.prototype.unsubscribe = function(){
   if(this.rosTopic){
-    this.rosTopic.unsubscribe(this.processMessage);
+    this.rosTopic.unsubscribe(this.processMessageBound);
   }
 };
 
@@ -54,7 +56,7 @@ ROS3D.Odometry.prototype.subscribe = function(){
     queue_length : 1,
     messageType : 'nav_msgs/Odometry'
   });
-  this.rosTopic.subscribe(this.processMessage.bind(this));
+  this.rosTopic.subscribe(this.processMessageBound);
 };
 
 ROS3D.Odometry.prototype.processMessage = function(message){

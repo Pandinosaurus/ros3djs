@@ -1,4 +1,5 @@
 /**
+ * @fileOverview
  * @author Mathieu Bredif - mathieu.bredif@ign.fr
  */
 
@@ -43,6 +44,8 @@ ROS3D.NavSatFix = function(options) {
   this.rootObject.add(this.line);
 
   this.rosTopic = undefined;
+
+  this.processMessageBound = this.processMessage.bind(this);
   this.subscribe();
 };
 ROS3D.NavSatFix.prototype.__proto__ = THREE.Object3D.prototype;
@@ -50,7 +53,7 @@ ROS3D.NavSatFix.prototype.__proto__ = THREE.Object3D.prototype;
 
 ROS3D.NavSatFix.prototype.unsubscribe = function(){
   if(this.rosTopic){
-    this.rosTopic.unsubscribe(this.processMessage);
+    this.rosTopic.unsubscribe(this.processMessageBound);
   }
 };
 
@@ -65,7 +68,7 @@ ROS3D.NavSatFix.prototype.subscribe = function(){
       messageType : 'sensor_msgs/NavSatFix'
   });
 
-  this.rosTopic.subscribe(this.processMessage.bind(this));
+  this.rosTopic.subscribe(this.processMessageBound);
 };
 
 ROS3D.NavSatFix.prototype.processMessage = function(message){

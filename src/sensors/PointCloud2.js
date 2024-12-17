@@ -1,4 +1,5 @@
 /**
+ * @fileOverview
  * @author David V. Lu!! - davidvlu@gmail.com
  * @author Mathieu Bredif - mathieu.bredif@ign.fr
  */
@@ -67,6 +68,8 @@ ROS3D.PointCloud2 = function(options) {
   this.points = new ROS3D.Points(options);
   this.rosTopic = undefined;
   this.buffer = null;
+
+  this.processMessageBound = this.processMessage.bind(this);
   this.subscribe();
 };
 ROS3D.PointCloud2.prototype.__proto__ = THREE.Object3D.prototype;
@@ -74,7 +77,7 @@ ROS3D.PointCloud2.prototype.__proto__ = THREE.Object3D.prototype;
 
 ROS3D.PointCloud2.prototype.unsubscribe = function(){
   if(this.rosTopic){
-    this.rosTopic.unsubscribe(this.processMessage);
+    this.rosTopic.unsubscribe(this.processMessageBound);
   }
 };
 
@@ -90,7 +93,7 @@ ROS3D.PointCloud2.prototype.subscribe = function(){
     queue_length : 1,
     compression: this.compression
   });
-  this.rosTopic.subscribe(this.processMessage.bind(this));
+  this.rosTopic.subscribe(this.processMessageBound);
 };
 
 ROS3D.PointCloud2.prototype.processMessage = function(msg){

@@ -1,4 +1,5 @@
 /**
+ * @fileOverview
  * @author Jihoon Lee - jihoonlee.in@gmail.com
  * @author Russell Toris - rctoris@wpi.edu
  */
@@ -17,7 +18,6 @@
  */
 ROS3D.MeshResource = function(options) {
   THREE.Object3D.call(this);
-  var that = this;
   options = options || {};
   var path = options.path || '/';
   var resource = options.resource;

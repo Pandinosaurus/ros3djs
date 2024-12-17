@@ -1,4 +1,5 @@
 /**
+ * @fileOverview
  * @author David Gossow - dgossow@willowgarage.com
  */
 
@@ -42,7 +43,7 @@ ROS3D.InteractiveMarkerHandle = function(options) {
   this.setPoseFromServer(this.message.pose);
   this.tfUpdateBound = this.tfUpdate.bind(this);
 };
-ROS3D.InteractiveMarkerHandle.prototype.__proto__ = EventEmitter2.prototype;
+ROS3D.InteractiveMarkerHandle.prototype.__proto__ = EventEmitter3.prototype;
 
 /**
  * Subscribe to the TF associated with this interactive marker.

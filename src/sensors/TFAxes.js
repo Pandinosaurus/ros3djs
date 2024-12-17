@@ -1,4 +1,5 @@
 /**
+ * @fileOverview
  * @author Jihoon Lee - jihoon.lee@kakaobrain.com
  */
 /**
@@ -22,7 +23,6 @@
  */
 ROS3D.TFAxes = function(options) {
   THREE.Object3D.call(this);
-  var that = this;
   options = options || {};
 
   this.frame_id = options.frame_id;
